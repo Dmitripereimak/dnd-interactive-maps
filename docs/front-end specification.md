@@ -332,3 +332,203 @@ graph TD
 - **Undo/Redo for Token Movement:** Included for gameplay flexibility - allows quick corrections during active sessions without breaking flow
 - **No Preview Mode for Fog:** Changes commit immediately for responsive gameplay experience
 - **Character Management:** Focused on adding existing character data to campaigns, not character creation from scratch
+
+---
+
+## Wireframes & Mockups
+
+**Primary Design Files:** To be created in Figma/Sketch (TBD)
+
+**Note:** Detailed visual designs will be created in design tools. Below are conceptual layouts for key screens to guide the design process.
+
+### Key Screen Layouts
+
+#### Campaign Dashboard
+
+**Purpose:** Overview of all user campaigns, entry point after login
+
+**Key Elements:**
+
+- Header with user menu and logout
+- "Create New Campaign" button (prominent, top-right)
+- Grid/list view of campaign cards
+- Each campaign card shows:
+  - Campaign name
+  - Description (truncated)
+  - Last modified date
+  - Number of maps
+  - Number of characters
+  - Thumbnail/preview image (optional)
+- Empty state: Friendly message with "Create Your First Campaign" CTA
+
+**Interaction Notes:**
+
+- Click campaign card → Navigate to Campaign View
+- Hover on card → Show quick actions (edit, delete)
+- Responsive grid: 3-4 columns on desktop, 2 on tablet, 1 on mobile
+
+**Design File Reference:** `campaign-dashboard.figma` (to be created)
+
+---
+
+#### Campaign View (Main Workspace)
+
+**Purpose:** Central hub for campaign management with sidebar navigation
+
+**Key Elements:**
+
+- **Top Bar:**
+  - Campaign name (editable)
+  - Breadcrumb: Dashboard > Campaign Name
+  - User menu, logout
+- **Left Sidebar (Collapsible, ~250px when expanded):**
+  - Toggle button (hamburger icon)
+  - Maps section:
+    - "Upload Map" button
+    - Scrollable list of maps with thumbnails
+    - Click map → Opens in Map Viewer
+  - Characters section:
+    - "Add Character" button
+    - Filter tabs: All / PCs / NPCs / Enemies
+    - Scrollable list of characters
+    - Click character → Opens character details/edit
+  - Campaign Notes section
+  - Campaign Settings section
+- **Main Content Area:**
+  - Default: Campaign overview or selected map
+  - Shows map viewer when map is selected
+  - Shows character management panel when in character mode
+
+**Interaction Notes:**
+
+- Sidebar collapse/expand animation (smooth slide)
+- When collapsed: Icon-only mode with tooltips
+- Main content area resizes dynamically based on sidebar state
+
+**Design File Reference:** `campaign-view.figma` (to be created)
+
+---
+
+#### Map Viewer
+
+**Purpose:** Full-screen interactive map display with token placement and fog of war
+
+**Key Elements:**
+
+- **Fixed Top Toolbar:**
+  - Grid toggle (on/off)
+  - Fog of War tools (draw/erase toggle, brush size)
+  - Zoom controls: Zoom In, Zoom Out, Reset, Zoom level indicator
+  - Character selector dropdown (for placing new tokens)
+  - Undo/Redo buttons
+  - Map settings icon
+  - Sidebar toggle button
+- **Map Canvas Area:**
+  - Full viewport minus toolbar height
+  - Click and drag to pan
+  - Mouse wheel to zoom
+  - Grid overlay (when enabled)
+  - Tokens (draggable, clickable)
+  - Fog of war layers
+- **Character Stats Panel (Right Side, Slides In):**
+  - Triggered by token click
+  - Shows character name, type
+  - HP, AC, ability scores
+  - Character notes
+  - Edit button
+  - Close button (X)
+  - Width: ~300px
+
+**Interaction Notes:**
+
+- Map fills available space (responsive to viewport)
+- Toolbar always visible, doesn't scroll with map
+- Character stats panel overlays map, can be dismissed
+- Tokens snap to grid when grid enabled
+- Smooth zoom/pan interactions
+
+**Design File Reference:** `map-viewer.figma` (to be created)
+
+---
+
+#### Character Entry Form
+
+**Purpose:** Add character to campaign by entering data from character sheet
+
+**Key Elements:**
+
+- Modal or slide-in panel
+- Form fields:
+  - Character name (required)
+  - Character type: Radio buttons (PC / NPC / Enemy)
+  - Token image upload (optional, with preview)
+  - Stats section:
+    - HP (number input)
+    - AC (number input)
+    - Ability scores: STR, DEX, CON, INT, WIS, CHA (number inputs)
+  - Notes (textarea)
+- Action buttons:
+  - Save (primary)
+  - Cancel
+  - Clear form
+
+**Interaction Notes:**
+
+- Form validation on blur/change
+- Required fields highlighted if empty on submit
+- Token image preview shows after upload
+- Efficient tab navigation between fields
+- Auto-save draft (optional, future enhancement)
+
+**Design File Reference:** `character-form.figma` (to be created)
+
+---
+
+#### Character Management Panel
+
+**Purpose:** View and manage all characters in campaign
+
+**Key Elements:**
+
+- Filter tabs: All / PCs / NPCs / Enemies
+- Search bar (filter by name)
+- Character list:
+  - Each item shows:
+    - Character name
+    - Type badge (PC/NPC/Enemy)
+    - Token image thumbnail
+    - HP/AC summary
+  - Click character → Opens character details/edit
+- "Add Character" button (floating action or top button)
+- Bulk actions (future): Select multiple, delete
+
+**Interaction Notes:**
+
+- List updates in real-time as characters are added/edited
+- Click character → Opens character details panel or modal
+- Hover shows quick actions (edit, delete)
+- Responsive: Scrollable list, pagination if many characters
+
+**Design File Reference:** `character-management.figma` (to be created)
+
+---
+
+**Rationale & Trade-offs:**
+
+- **Campaign Dashboard:** Card-based layout provides visual hierarchy and quick scanning. Alternative: Table view (more compact but less visual).
+- **Map Viewer:** Fixed toolbar ensures tools always accessible. Trade-off: Uses vertical space, but map area is still maximized.
+- **Character Stats Panel:** Slides in from right to avoid covering map center where most action happens. Alternative: Bottom panel (less intrusive but harder to read during gameplay).
+- **Character Entry Form:** Modal keeps focus on data entry. Alternative: Inline form (faster but more cluttered).
+
+**Assumptions:**
+
+- Desktop viewport: 1920x1080 minimum, optimized for 1366x768 and up
+- Toolbar height: ~60px
+- Sidebar width: 250px expanded, 60px collapsed
+- Character stats panel: 300px width
+
+**Questions for Validation:**
+
+- Should character entry form be a modal or inline panel?
+- Do we need a campaign overview screen, or go straight to map viewer?
+- Should the map viewer have a minimap/overview window?
